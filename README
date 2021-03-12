@@ -1,0 +1,50 @@
+Petrusca Bogdan Mihai 333CB
+
+Am decis sa realizez tema putin diferit decat cum este in cerinta
+deoarece grupa noastra este in urma cu un laborator si la momentul
+realizarii temei nu am facut laboratorul unde ni se explica parsarea utilizand TDA-uri
+
+Am decis sa folosesc forma poloneza postfixata. De exemplu pentru inputul (a*b)
+postfixarea va fi: a * b |
+
+La curs ni s-a spui ca pentru a face uniunea a 2 nfa-uri trebuie sa creezi
+2 stari in plus pe care sa le lipesti la cele 2 nfa-uri prin epsilon tranzitii.
+
+De exemplu sa spunem ca avem 0-a-1, 2-b-3, 2 nfa-uri. Creez 2 stari 4 si 5
+iar din 4 duc 2 epsilon tranzitii catre 0 si 2, iar din 1 si 3 duc epsilon tranzitii
+catre 5 
+
+Pentru a realiza concatenarea am facut ca ultima stare a primului nfa sa coincida cu
+cea de-a 2 stare. 
+
+De exemplu pentru nfa-urile 0-a-1, 2-b-3, nfa-ul rezultat din concatenare va fi:
+0-a-1-b-2.
+
+Pentru a realiza inchiderea unui nfa am adaugat 2 stari in plus. Pe cele 2 stari
+adaugate in plus le-am legat cu o epsilon tranzitie intre ele si intre marginile
+nfa-ului pe care vrem sa-l inchidem. In plus am mai adaugat inca o epsilon tranzitie
+de la ultima stare a nfa-ului catre prima. 
+
+De exemplu pentru nfa-ul 0-a-1 am creat 2 stari in plus 2 si 3 si am adaugat
+tranzitiile 1-eps-0, 2-eps-0, 1-eps-3 si 2-eps-3.
+
+Dupa ce fac citirea regexului am creat si o functie care modifica stringul citit
+adaugand operator
+
+Pentru a calcula nfa-ul regexului folosesc functia computNfa care foloseste o stiva.
+In cazul in care intalnesc un operator atunci scot de pe stiva nfa-urile partiale
+si aplic functia specifica operatorului urmand sa adaug rezultatul inapoi pe stiva.
+La final returnez varful stivei. In cazul in care nu citesc operatori atunci inseamna
+ca s-a citit o litera si construiesc un nfa partial format din 2 stari si o tranzitie
+pe acea litera, iar rezultatul il adaug in stiva
+
+
+Astfel:
+1. citesc din fisier regex-ul
+2. aplic functia de adaugare a operatorului .
+3. aplic algoritmul de postfixare folosind functia "computePostFix"
+4. aplic algorimul de construire a nfa-ului folosind functia "computeNfa"
+
+Tin sa mentionez ca nu-mi merge algoritmul de convertire a nfa-ului in regex
+deoarece cand am facut tema 2 nu m-am gandit ca voi avea stari de peste 2-3 cifre
+si timpul nu ma mai lasa sa il modific
